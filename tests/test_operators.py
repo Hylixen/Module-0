@@ -24,6 +24,7 @@ from minitorch.operators import (
     relu_back,
     log,
     sigmoid,
+    sum,
 )
 
 from .strategies import assert_close, small_floats, positive_floats
@@ -110,7 +111,7 @@ def test_sigmoid(a: float) -> None:
     """
     assert sigmoid(a) > 0.0
     assert sigmoid(a) <= 1.0
-    assert_close(1 - sigmoid(a), sigmoid(-a)) 
+    assert_close(1 - sigmoid(a), sigmoid(-a))
     assert_close(sigmoid(0), 0.5)
     assert sigmoid(a + 0.5) - sigmoid(a) >= 0
 
@@ -123,12 +124,12 @@ def test_transitive(a: float, b: float, c: float) -> None:
         assert lt(a, b)
     else:
         assert lt(a, b) is False
-    
+
     if b < c:
         assert lt(b, c)
     else:
         assert lt(b, c) is False
-    
+
     if a < b and b < c:
         assert lt(a, c)
 
@@ -153,7 +154,7 @@ def test_distribute(z: float, x: float, y: float) -> None:
 
 @pytest.mark.task0_2
 @given(positive_floats)
-def test_other(a :float) -> None:
+def test_other(a: float) -> None:
     """Write a test that ensures some other property holds for your functions."""
     if a >= 1:
         assert log(a) >= 0
@@ -185,8 +186,7 @@ def test_sum_distribute(ls1: List[float], ls2: List[float]) -> None:
     """Write a test that ensures that the sum of `ls1` plus the sum of `ls2`
     is the same as the sum of each element of `ls1` plus each element of `ls2`.
     """
-    # TODO: Implement for Task 0.3.
-    raise NotImplementedError("Need to implement for Task 0.3")
+    assert_close(add(sum(ls1), sum(ls2)), sum(addLists(ls1, ls2)))
 
 
 @pytest.mark.task0_3

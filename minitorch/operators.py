@@ -4,7 +4,7 @@ import math
 
 # ## Task 0.1
 from typing import Iterable
-
+from functools import reduce
 #
 # Implementation of a prelude of elementary functions.
 
@@ -141,22 +141,33 @@ def relu_back(x: float, cof: float) -> float:
 #
 # Use these to implement
 # - negList : negate a list
-def negList(x: Iterable[float], y: Iterable[float]) -> Iterable[float]:
-    """TODO"""
-    pass
+def negList(x: Iterable[float]) -> Iterable[float]:
+    """Negate a list"""
+    return [v for v in map(neg, x)]
 
 
 # - addLists : add two lists together
 def addLists(x: Iterable[float], y: Iterable[float]) -> Iterable[float]:
-    """TODO"""
-    pass
+    """Add two lists together"""
+    if len(x) != len(y):
+        raise Exception("equal len of x, y required for addLists")
+    return [add(v1, v2) for v1, v2 in zip(x, y)]
 
 
 # - sum: sum lists
+def sum(x: Iterable[float]) -> float:
+    """Sum lists"""
+    if len(x) < 1:
+        return 0
+    return reduce(add, x)
+
+
 # - prod: take the product of lists
-def prod(x: Iterable[float], y: Iterable[float]) -> Iterable[float]:
-    """TODO"""
-    pass
+def prod(x: Iterable[float]) -> float:
+    """Take the product of lists"""
+    if len(x) < 1:
+        raise Exception("Error: got empty list for prod.")
+    return reduce(mul, x)
 
 
 # TODO: Implement for Task 0.3.
